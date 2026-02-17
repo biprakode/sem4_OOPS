@@ -5,13 +5,15 @@ days = ["monday" , "tuesday" , "wednesday" , "thursday" , "friday" , "saturday" 
 
 def fill_coupons(cpns) -> None:
     for day in days:
-        cpns[day] = random.randint(1, 20)
+        disc = random.randint(1, 20)
+        cpns[day] = f"{day[:3].upper()}{disc}"
 
 
-def apply_coupons(day:str , price:float) -> int:
+def apply_coupons(day:str , coupon_code , price:float) -> int:
     day = day.strip().lower()
+    if(cou)
     if day in coupons.keys():
-        return price * (1 - coupons[day]/100)
+        return price * (1 - int(coupons[day][-2:])/100)
     else:
         print("Invalid Coupon")
         return -1
@@ -19,10 +21,7 @@ def apply_coupons(day:str , price:float) -> int:
 
 fill_coupons(coupons)
 print("discounts = " , coupons)
-print(apply_coupons("Monday", 100))
-print(apply_coupons("Tuesday", 100))
-print(apply_coupons("Wednesday", 100))
-print(apply_coupons("Friday", 100))
-print(apply_coupons("Saturday", 100))
-print(apply_coupons("Sunday", 100))
-print(apply_coupons("Thursday", 100))
+for i in range(1000):
+    random_day = int(random.random() * len(days))
+    disc = int(random.random() * 20)
+    apply_coupons(days[random_day], f"{days[random_day][:3].upper()}{disc}" , 1000 )
