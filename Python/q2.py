@@ -11,7 +11,7 @@ def fill_coupons(cpns) -> None:
 
 def apply_coupons(day:str , coupon_code , price:float) -> int:
     day = day.strip().lower()
-    if(cou)
+    if coupon_code in coupons:
     if day in coupons.keys():
         return price * (1 - int(coupons[day][-2:])/100)
     else:
