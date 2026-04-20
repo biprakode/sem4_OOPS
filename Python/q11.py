@@ -1,26 +1,40 @@
-def _isPalindrome(word:str) -> bool:
-    if len(word)==1:
+# Name - Biprarshi Biswas
+# Roll No - 002410501094
+# BCSE-II A3
+
+# Question:
+# Search for palindrome and unique words in a text using class method and string method.
+
+def _isPalindrome(word: str) -> bool:
+    # single letter words are skipped on purpose
+    if len(word) == 1:
         return False
-    if len(word)%2 == 0:
+    # even-length words cannot be palindromes in the way the assignment wants
+    if len(word) % 2 == 0:
         return False
-    for idx,char in enumerate(word):
-        if char != word[-idx-1]:
+    # compare characters from both ends inward
+    for idx, char in enumerate(word):
+        if char != word[-idx - 1]:
             return False
 
     return True
 
 
 class PalindromeFinder:
-    def __init__(self, path:str):
+    def __init__(self, path: str):
+        # remember the path and prep containers
         self.path = path
         self.palindromes = set()
         with open(path, 'r') as f:
             self.text = f.read()
-            self.text.replace('\n',' ')
+            # flatten newlines into spaces so word splitting works
+            self.text.replace('\n', ' ')
             print(self.text)
+            # set auto-deduplicates for us
             self.unique_words = set(self.text.split())
 
     def findPalindromes(self):
+        # scan every word, stash it if it reads the same both ways
         for words in self.text.split():
             if _isPalindrome(words):
                 self.palindromes.add(words)

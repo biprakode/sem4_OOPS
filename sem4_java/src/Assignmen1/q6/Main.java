@@ -1,3 +1,12 @@
+// Name - Biprarshi Biswas
+// Roll No - 002410501094
+// BCSE-II A3
+
+// Question:
+// Create a program for ordering Pizza. The user should mention the size of the Pizza
+// and the toppings he/she wants. A user may ask for any toppings. Implement this using
+// (i) variable arguments concept and (ii) command line arguments.
+
 package Assignmen1.q6;
 import java.util.Scanner;
 
@@ -6,12 +15,14 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Welcome to Pizza Factory");
+        // bail out with usage if the user forgets to pass anything
         if (args.length == 0) {
             System.out.println("Usage: java Assignmen1.q6.Main <pizza_type_id1> <pizza_type_id2> ...");
             System.out.println("Types: 1: NY, 2: Chicago, 3: Hawaiian, 4: Sicilian");
             return;
         }
-        for(String arg : args) {
+        // every command line arg is a pizza order
+        for (String arg : args) {
             try {
                 processPizzaChoice(arg);
             } catch (IllegalArgumentException e) {
@@ -23,6 +34,7 @@ public class Main {
 
     private static void processPizzaChoice(String arg) {
         int choice;
+        // parse first, fail early if the arg is not a number
         try {
             choice = Integer.parseInt(arg);
         } catch (IllegalArgumentException e) {
@@ -35,8 +47,7 @@ public class Main {
         displayPizzaDetails(pizza);
     }
 
-
-
+    // fires the full workflow: dough, toppings, bake, cut, deliver
     static void displayPizzaDetails(Pizza pizza) {
         String dough = pizza.GetDough();
         String toppings = pizza.GetToppings();

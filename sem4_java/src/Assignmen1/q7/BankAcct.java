@@ -1,3 +1,13 @@
+// Name - Biprarshi Biswas
+// Roll No - 002410501094
+// BCSE-II A3
+
+// Question:
+// Design a BankAcct class with account number, balance and interest rate as attribute.
+// Interest rate is same for all account. Support must be there to initialize, change
+// and display the interest rate. Also supports are to be there to return balance and
+// calculate interest.
+
 package Assignmen1.q7;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -6,6 +16,7 @@ import java.util.Date;
 public class BankAcct {
     private String accnum;
     private Long balance;
+    // single interest rate shared by every account - that's why it's static
     private static float interest;
 
     BankAcct(String acc, Long b) {
@@ -13,8 +24,9 @@ public class BankAcct {
         balance = b;
     }
 
-    public Long calculateInterest(Date date1 , Date date2) throws InvalidAttributesException {
-        if(!date1.before(date2)) {
+    // grows the balance using months between the two dates times the interest rate
+    public Long calculateInterest(Date date1, Date date2) throws InvalidAttributesException {
+        if (!date1.before(date2)) {
             throw new InvalidAttributesException("Time error");
         }
         long month = date2.getMonth() - date1.getMonth();
@@ -36,7 +48,6 @@ public class BankAcct {
     public static void setInterest(float interest) {
         BankAcct.interest = interest;
     }
-
 
     public String getAccnum() {
         return accnum;

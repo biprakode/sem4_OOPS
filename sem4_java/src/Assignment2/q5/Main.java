@@ -1,3 +1,18 @@
+// Name - Biprarshi Biswas
+// Roll No - 002410501094
+// BCSE-II A3
+
+// Question:
+// Each customer of a bank has customer id, name, current loan amount and phone number.
+// One can change attributes like name and phone number. A customer may ask for loan of
+// certain amount. It is granted provided the sum of current loan amount and asked amount
+// does not exceed credit limit (fixed amount for all customers). A customer can be a
+// privileged customer with higher credit limit. Once a loan is sanctioned necessary
+// updates should be made. Any type of customer should be able to find his credit limit,
+// current loan amount and amount of loan he can seek. No customer can change customer id
+// once created. Print customer name when the object is printed by toString() method.
+// Design and implement the classes. Show the working through a menu driven user interface.
+
 package Assignment2.q5;
 
 import java.util.ArrayList;
@@ -7,11 +22,13 @@ public class Main {
     static ArrayList<Customer> customers = new ArrayList<>();
 
     public static void main(String[] args) {
+        // two different credit caps based on customer type
         double regularCreditLimit = 50000;
         double privCreditLimit = 100000;
 
         Scanner sc = new Scanner(System.in);
         int choice;
+        // keep running the menu until the user chooses 0
         do {
             System.out.println("\n1. Add Regular Customer");
             System.out.println("2. Add Privileged Customer");
@@ -26,6 +43,7 @@ public class Main {
 
             switch (choice) {
                 case 1: {
+                    // add a regular customer
                     System.out.print("ID: ");
                     String id = sc.next();
                     System.out.print("Name: ");
@@ -37,6 +55,7 @@ public class Main {
                     break;
                 }
                 case 2: {
+                    // add a privileged customer with the higher cap
                     System.out.print("ID: ");
                     String id = sc.next();
                     System.out.print("Name: ");
@@ -48,6 +67,7 @@ public class Main {
                     break;
                 }
                 case 3: {
+                    // try to draft a loan for the chosen customer
                     Customer c = findCustomer(sc);
                     if (c == null) break;
                     System.out.print("Loan amount: ");
@@ -59,6 +79,7 @@ public class Main {
                     break;
                 }
                 case 4: {
+                    // show the customer's credit situation
                     Customer c = findCustomer(sc);
                     if (c == null) break;
                     String type = (c instanceof PrivellegedCustomer) ? "Privileged" : "Regular";
@@ -69,6 +90,7 @@ public class Main {
                     break;
                 }
                 case 5: {
+                    // update name
                     Customer c = findCustomer(sc);
                     if (c == null) break;
                     System.out.print("New name: ");
@@ -77,6 +99,7 @@ public class Main {
                     break;
                 }
                 case 6: {
+                    // update phone
                     Customer c = findCustomer(sc);
                     if (c == null) break;
                     System.out.print("New phone: ");
@@ -85,6 +108,7 @@ public class Main {
                     break;
                 }
                 case 7: {
+                    // call toString - should print just the name
                     Customer c = findCustomer(sc);
                     if (c == null) break;
                     System.out.println(c);
@@ -94,6 +118,7 @@ public class Main {
         } while (choice != 0);
     }
 
+    // tiny helper to look up a customer by ID
     static Customer findCustomer(Scanner sc) {
         System.out.print("Customer ID: ");
         String id = sc.next();

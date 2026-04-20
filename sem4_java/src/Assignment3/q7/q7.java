@@ -1,3 +1,16 @@
+// Name - Biprarshi Biswas
+// Roll No - 002410501094
+// BCSE-II A3
+
+// Question:
+// Modify the given class so that the ith token (1-indexed) of the series is:
+//   - "fizzbuzz" if i is divisible by 5 and 7
+//   - "fizz"     if i is divisible by 5 and not 9
+//   - "buzz"     if i is divisible by 7 and not 3
+//   - i         if i is not divisible by 7 or 5
+// If n=10 then the output will be [1,2,3,4,fizz,6,buzz,8,9,fizz]. You may use lambda
+// function for only creating Runnable objects.
+
 package Assignment3.q7;
 
 import java.util.ArrayList;
@@ -5,15 +18,10 @@ import java.util.List;
 
 public class q7 {
 
-    // Custom rules:
-    //   "fizzbuzz" if divisible by 5 AND 7
-    //   "fizz"     if divisible by 5 AND NOT 9
-    //   "buzz"     if divisible by 7 AND NOT 3
-    //   number     if NOT divisible by 7 OR 5  (i.e., not divisible by both 7 and 5 — meaning not div by either)
-    //   Some indices match none of these and are skipped.
-
+    // five buckets an index can fall into
     enum Category { FIZZBUZZ, FIZZ, BUZZ, NUMBER, SKIP }
 
+    // decide which bucket a given i belongs to
     static Category classify(int i) {
         boolean div5 = i % 5 == 0;
         boolean div7 = i % 7 == 0;
@@ -23,11 +31,12 @@ public class q7 {
         if (div5 && div7) return Category.FIZZBUZZ;
         if (div5 && !div9) return Category.FIZZ;
         if (div7 && !div3) return Category.BUZZ;
-        // "not divisible by 7 OR 5" means: not div by 7 AND not div by 5
+        // nothing matched - emit the raw number
         if (!div7 && !div5) return Category.NUMBER;
         return Category.SKIP;
     }
 
+    // same waiting strategy as q6 but driven by classify()
     static class FizzBuzz {
         private final int n;
         private int current = 1;
@@ -76,7 +85,7 @@ public class q7 {
             }
         }
 
-        // A dedicated "skipper" thread advances past indices that match no category
+        // helper thread that quietly advances past indices matching no category
         synchronized void skipper() throws InterruptedException {
             while (current <= n) {
                 while (current <= n && classify(current) != Category.SKIP) wait();
@@ -87,6 +96,7 @@ public class q7 {
         }
     }
 
+    // start all five threads (four workers + one skipper) and collect results
     static List<String> runFizzBuzz(int n) throws InterruptedException {
         FizzBuzz fb = new FizzBuzz(n);
         List<String> output = new ArrayList<>();
@@ -106,13 +116,13 @@ public class q7 {
         int n = 10;
         List<String> result = runFizzBuzz(n);
         System.out.println("n=" + n + ": " + result);
-        // Expected: [1, 2, 3, 4, fizz, 6, buzz, 8, 9, fizz]
+        // expected: [1, 2, 3, 4, fizz, 6, buzz, 8, 9, fizz]
 
-        // Verify
+        // sanity check
         List<String> expected = List.of("1", "2", "3", "4", "fizz", "6", "buzz", "8", "9", "fizz");
         System.out.println("Matches expected: " + result.equals(expected));
 
-        // Also show n=35 to see fizzbuzz (35 = 5*7)
+        // n=35 is the smallest case where fizzbuzz fires (35 = 5*7)
         System.out.println("\nn=35: " + runFizzBuzz(35));
     }
 }

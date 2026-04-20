@@ -1,3 +1,11 @@
+// Name - Biprarshi Biswas
+// Roll No - 002410501094
+// BCSE-II A3
+
+// Question:
+// Print the sum of all even numbers stored in a circular linked list. Represent Node as
+// an inner class. Collection classes are NOT allowed.
+
 package Assignment2.q2;
 
 import java.util.Scanner;
@@ -10,6 +18,7 @@ public class Main {
 
         System.out.println("--- Circular Linked List Creator ---");
 
+        // menu loop - keep going until the user picks 0
         do {
             System.out.println("\n1. Add Node\n2. Display List\n3. Show Even Sum\n0. Exit");
             System.out.print("Enter choice: ");
